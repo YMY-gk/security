@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
  * @class security
  * @date 2021/9/2 17:06
  */
-@Service
+@Service("UserDetailsService")
 public class MyUserDetialService implements UserDetailsService {
 
     @Override
@@ -25,6 +26,6 @@ public class MyUserDetialService implements UserDetailsService {
 // 从数据库中获取的密码 atguigu 的密文
         String pwd ="user";
         // 第三个参数表示权限
-        return new User(username,pwd, AuthorityUtils.commaSeparatedStringToAuthorityList("user,"));
+        return new User(username,new BCryptPasswordEncoder().encode(pwd), AuthorityUtils.commaSeparatedStringToAuthorityList("user,"));
     }
 }
