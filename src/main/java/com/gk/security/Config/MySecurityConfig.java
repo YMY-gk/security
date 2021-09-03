@@ -40,11 +40,16 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
 //                .loginPage("/index") // 配置哪个 url 为登录页面
-              //  .loginProcessingUrl("/user/login") // 设置哪个是登录的 url。
-                .successForwardUrl("/index") ;// 登录成功之后跳转到哪个 url
+                .loginProcessingUrl("/user/login") // 设置哪个是登录的 url。
+                .defaultSuccessUrl("/index").failureUrl("/")
+                .permitAll() ;// 登录成功之后跳转到哪个 url
         http.authorizeRequests()
-                .antMatchers("/layui/**","/index","/user/login") //表示配置请求路径
+                .antMatchers("/index") //表示配置请求路径
                 .permitAll() // 指定 URL 无需保护。
+                .antMatchers("/role").hasAnyAuthority("admin")//表示配置请求路径
+                .antMatchers("/user/role").hasAnyAuthority("user")//表示配置请求路径
+                .antMatchers("/role1").hasAnyRole("role")//表示配置请求路径
+                .antMatchers("/user/role1").hasAnyRole("role1")//表示配置请求路径
                 .anyRequest() // 其他请求
                 .authenticated(); //需要认证
 // 关闭 csrf

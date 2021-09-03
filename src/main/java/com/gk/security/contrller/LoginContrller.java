@@ -13,16 +13,42 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2021/9/2 16:50
  */
 @Slf4j
-@Controller
+@RestController
 public class LoginContrller {
 
-    @GetMapping("index")
+    @GetMapping("/index")
     public String index(){
+        log.error("------------------------------------------------");
         return "success";
     }
-    @PostMapping("user/login")
+    @PostMapping("/user/login")
     public String login(String username,String password){
         log.error(username+"------------"+password);
         return "success";
+    }
+    @GetMapping("/role")
+    public String role(){
+        log.error("------role------");
+        return "success";
+    }
+    @GetMapping("/role1")
+    public String role1(){
+        log.error("------role1------");
+        return "success";
+    }
+    @GetMapping("/user/role")
+    public String role01(){
+        log.error("----/user/role--------");
+        return "success00001";
+    }
+    @GetMapping("/user/role1")
+    public String role011(){
+        log.error("----/user/role1--------");
+        return "success00001";
+    }
+    @GetMapping("/user/role2")
+    public String role012(){
+        log.error("----/user/role2--------");
+        return "测试权限";
     }
 }
