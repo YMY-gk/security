@@ -17,4 +17,5 @@ public class LoginContrller {
     public String index(){
         return "success";
     }
+
 }

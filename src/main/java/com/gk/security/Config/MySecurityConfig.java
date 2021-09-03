@@ -38,11 +38,19 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin() // 表单登录
-                .and()
-                .authorizeRequests() // 认证配置
-                .anyRequest() // 任何请求
-                .authenticated(); // 都需要身份验证
+      // 配置认证
+        http.formLogin()
+                .loginPage("/index") // 配置哪个 url 为登录页面
+                .loginProcessingUrl("/login") // 设置哪个是登录的 url。
+                .successForwardUrl("/success") // 登录成功之后跳转到哪个 url
+                .failureForwardUrl("/fail");// 登录失败之后跳转到哪个 url
+        http.authorizeRequests()
+                .antMatchers("/layui/**","/index") //表示配置请求路径
+                .permitAll() // 指定 URL 无需保护。
+                .anyRequest() // 其他请求
+                .authenticated(); //需要认证
+// 关闭 csrf
+        http.csrf().disable();
     }
 
 }
