@@ -26,7 +26,7 @@ public class MyUserDetialService implements UserDetailsService {
             throw new UsernameNotFoundException("用户名不存在！");
         }
         log.error("-----------------------------loadUserByUsername-----------------------------------");
-// 从数据库中获取的密码 atguigu 的密文
+        // 从数据库中获取的密码 atguigu 的密文
         String pwd ="user";
         // 第三个参数表示权限
         return new User(username,new BCryptPasswordEncoder().encode(pwd), AuthorityUtils.commaSeparatedStringToAuthorityList("user,ROLE_role1"));

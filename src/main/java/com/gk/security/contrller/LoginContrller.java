@@ -51,4 +51,9 @@ public class LoginContrller {
         log.error("----/user/role2--------");
         return "测试权限";
     }
+    @GetMapping("/user/role3")
+    public String role013(){
+        log.error("----/user/role3--------");
+        return "测试权限未附权限";
+    }
 }

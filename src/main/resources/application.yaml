@@ -1,7 +1,12 @@
 server:
   port: 8081
-#spring:
+spring:
 #  security:
 #    user:
 #     name : user
 #     password: user
+  redis:
+    host: 182.254.221.85
+    password: redis_6379
+    port: 6379
+    timeout: 5000
