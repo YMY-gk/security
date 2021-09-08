@@ -25,7 +25,6 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
-
     @Bean
     public PasswordEncoder passwordEncoder(){
         return  new BCryptPasswordEncoder();//没有加密
@@ -41,7 +40,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
 //                .loginPage("/index") // 配置哪个 url 为登录页面
                 .loginProcessingUrl("/user/login") // 设置哪个是登录的 url。
-                .defaultSuccessUrl("/index").failureUrl("/")
+                .successForwardUrl("/index").failureUrl("/")
                 .permitAll() ;// 登录成功之后跳转到哪个 url
         http.authorizeRequests()
                 .antMatchers("/index") //表示配置请求路径
