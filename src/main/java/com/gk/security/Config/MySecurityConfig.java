@@ -50,7 +50,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/role1").hasAnyRole("role")//表示配置请求路径
                 .antMatchers("/user/role1").hasAnyRole("role1")//表示配置请求路径
                 .anyRequest() // 其他请求
-                .authenticated(); //需要认证
+                .authenticated().and(); //需要认证
 // 关闭 csrf
         http.csrf().disable();
     }
