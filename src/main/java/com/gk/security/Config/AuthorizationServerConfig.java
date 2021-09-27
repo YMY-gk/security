@@ -2,10 +2,13 @@ package com.gk.security.Config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 
 /**
  * @author guokui
@@ -17,6 +20,15 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private UserDetailsService userDetailsService;
+    @Override
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        endpoints.authenticationManager(authenticationManager).userDetailsService(userDetailsService);
+    }
+
     @Override
     //配置客户端详情（Client Details）
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -29,7 +41,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                  * 密码模式（resource owner password credentials）
                  * 客户端模式（client credentials）
                  */
-                .authorizedGrantTypes("client_credentials", "refresh_token", "authorization_code") //授权类型
+                .authorizedGrantTypes("client_credentials", "password","refresh_token", "authorization_code") //授权类型
                 .redirectUris("https://www.baidu.com")
                 .scopes("all") //授权范围
                 .secret(passwordEncoder.encode("123456"));//密钥

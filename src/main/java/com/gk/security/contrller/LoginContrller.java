@@ -1,11 +1,9 @@
 package com.gk.security.contrller;
 
-import io.swagger.annotations.Authorization;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -17,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoginContrller {
 
-    @GetMapping("/index")
-    public String index(Authorization authorization){
-        log.error("------------------------------------------------"+authorization.value());
+    @GetMapping("/user/index")
+    public String index(Authentication authorization){
+        log.error("------------------------------------------------"+authorization.getPrincipal());
         return "success";
     }
     @PostMapping("/user/login")
