@@ -31,28 +31,22 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
-        super.configure(web);
-    }
-
-    @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin()
-//                .loginPage("/index") // 配置哪个 url 为登录页面
-                .loginProcessingUrl("/user/login") // 设置哪个是登录的 url。
-                .successForwardUrl("/index").failureUrl("/")
-                .permitAll() ;// 登录成功之后跳转到哪个 url
-        http.authorizeRequests()
-                .antMatchers("/index") //表示配置请求路径
-                .permitAll() // 指定 URL 无需保护。
-                .antMatchers("/role").hasAnyAuthority("admin")//表示配置请求路径
-                .antMatchers("/user/role").hasAnyAuthority("user")//表示配置请求路径
-                .antMatchers("/role1").hasAnyRole("role")//表示配置请求路径
-                .antMatchers("/user/role1").hasAnyRole("role1")//表示配置请求路径
-                .anyRequest() // 其他请求
-                .authenticated().and(); //需要认证
-// 关闭 csrf
-        http.csrf().disable();
+        http.requestMatchers()  //所有端点配置
+                .antMatchers("/oauth/**", "/login")  // 匹配一个数据 ant路径格式
+                .and()
+                .authorizeRequests()  // url权限配置
+                .antMatchers("/login").permitAll()  // 表示登录表单页面不拦截
+                .antMatchers("/oauth/**").authenticated()  // 保护url，需要用户登录
+                .and()
+                .formLogin().permitAll()  //没有自定义loginpage  则不要写上loginPage("/xxxx") 否则404
+                .and()
+                .logout().permitAll()
+                // /logout退出清除cookie
+                .and()
+                .csrf().disable()
+                // 禁用httpBasic
+                .httpBasic().disable();
     }
 
 }

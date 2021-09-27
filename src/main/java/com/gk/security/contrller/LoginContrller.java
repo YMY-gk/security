@@ -1,5 +1,6 @@
 package com.gk.security.contrller;
 
+import io.swagger.annotations.Authorization;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginContrller {
 
     @GetMapping("/index")
-    public String index(){
-        log.error("------------------------------------------------");
+    public String index(Authorization authorization){
+        log.error("------------------------------------------------"+authorization.value());
         return "success";
     }
     @PostMapping("/user/login")
