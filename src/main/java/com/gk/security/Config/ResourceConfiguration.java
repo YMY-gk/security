@@ -20,9 +20,9 @@ public class ResourceConfiguration extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
-                .requestMatchers().antMatchers("/userInfo")
+                .requestMatchers().antMatchers("/user/**")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/userInfo").authenticated();  //受保护资源url: /userInfo 需要认证
+                .antMatchers("/user/**").authenticated();  //受保护资源url: /userInfo 需要认证
     }
 }

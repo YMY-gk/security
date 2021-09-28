@@ -41,7 +41,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                  * 密码模式（resource owner password credentials）
                  * 客户端模式（client credentials）
                  */
-                .authorizedGrantTypes("client_credentials", "password","refresh_token", "authorization_code") //授权类型
+                .authorizedGrantTypes("client_credentials", "implicit","password","refresh_token", "authorization_code") //授权类型
                 .redirectUris("https://www.baidu.com")
                 .scopes("all") //授权范围
                 .secret(passwordEncoder.encode("123456"));//密钥
